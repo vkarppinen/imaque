@@ -51,6 +51,8 @@ def handle_upload(request):
         image = request.POST['image']
         b64data = b64encode(image.file.read())
         mimetype = image.type
+
+        # handle image tags
         if 'tags' in request.POST:
             tags = request.POST['tags']
         else:
@@ -59,8 +61,14 @@ def handle_upload(request):
         logger.error(e)
         return Response('An error occurred. No image was sent!')
 
+    # handle incorrect file types.
+    if image.type not in ['image/jpeg', 'image/jpg', 'image/png']:
+        return Response(f'Image file type ({0}) not supported.'
+                        .format(image.type))
 
-    #TODO: Check file sizes and formats
+    # handle file size
+    if request.content_length > 2000000:
+        return Response(f'Only under 2mb images supported.')
 
     data_uri = 'data:{0};base64,{1}'.format(mimetype, b64data.decode('utf-8'))
     result = cloudinary.uploader.upload(data_uri, tags=tags)
