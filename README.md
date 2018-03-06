@@ -1,29 +1,37 @@
 imaque
-======
+------
+Testing pyramid framework.
+
 
 Getting Started
 ---------------
 
-- Change directory into your newly created project.
+Change directory into project.
+```
+$ cd imaque
+```
 
-    cd imaque
+Create a Python virtual environment.
+```
+$ python3 -m venv venv
+```
 
-- Create a Python virtual environment.
+Upgrade packaging tools.
+```
+$ venv/bin/pip install --upgrade pip setuptools
+```
 
-    python3 -m venv env
+Install the project in editable mode with its testing requirements.
+```
+$ venv/bin/pip install -e ".[testing]"
+```
 
-- Upgrade packaging tools.
+Run tests.
+```
+$ venv/bin/pytest
+```
 
-    env/bin/pip install --upgrade pip setuptools
-
-- Install the project in editable mode with its testing requirements.
-
-    env/bin/pip install -e ".[testing]"
-
-- Run your project's tests.
-
-    env/bin/pytest
-
-- Run your project.
-
-    env/bin/pserve development.ini
+Run project (requires certain env variables).
+```
+$ make develop
+```
